@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Portofolio & CV Profesional | Nama Anda",
-  description: "Portofolio imersif Full Stack Web Developer & UI/UX Designer.",
+  title: "Portofolio Modern",
+  description: "Portofolio dibuat dengan Next.js dan Tailwind CSS",
 };
 
 export default function RootLayout({ children }) {
