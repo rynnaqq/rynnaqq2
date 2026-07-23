@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
-  Sparkles, Menu, X, ArrowUpRight, ArrowDown, Heart, ChatText, 
-  Palette, Code, Laptop, Bezier2, Rocket, Maximize2, Quote, 
+  Sparkles, Menu, X, ArrowUpRight, ArrowDown, Heart, MessageSquare, 
+  Palette, Code, Laptop, PenTool, Rocket, Maximize2, Quote, 
   Copy, Check, Github, Linkedin, Twitter, Instagram 
 } from "lucide-react";
 
@@ -113,7 +113,6 @@ export default function Home() {
 
       {/* ================= HERO SECTION (PARALLAX) ================= */}
       <section id="hero" className="min-h-screen relative flex items-center justify-center pt-20 px-6 overflow-hidden">
-        {/* Ambient Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-orange/15 rounded-full blur-[120px] pointer-events-none" />
 
         <motion.div 
@@ -160,7 +159,7 @@ export default function Home() {
               <ArrowDown className="w-4 h-4" />
             </a>
             <a href="#kontak" className="w-full sm:w-auto px-8 py-4 rounded-full border border-brand-border bg-transparent text-brand-warm font-semibold text-sm hover:bg-brand-warm hover:text-brand-dark transition-all flex items-center justify-center gap-2">
-              <ChatText className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4" />
               <span>Mari Mengobrol</span>
             </a>
           </motion.div>
@@ -255,10 +254,10 @@ export default function Home() {
               className="p-8 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-orange/50 transition-colors"
             >
               <div className="w-14 h-14 rounded-2xl bg-brand-orange/15 border border-brand-orange/30 text-brand-orange flex items-center justify-center mb-6">
-                <Bezier2 className="w-7 h-7" />
+                <PenTool className="w-7 h-7" />
               </div>
               <h3 className="font-heading text-xl font-bold text-white mb-3">Desain Antarmuka (UI/UX)</h3>
-              <p class="text-sm text-brand-muted leading-relaxed">
+              <p className="text-sm text-brand-muted leading-relaxed">
                 Perancangan alur pengguna yang intuitif, ramah pengguna, dan tata letak modern berbasis data penelitian pengguna.
               </p>
             </motion.div>
@@ -334,7 +333,7 @@ export default function Home() {
       <section id="testimoni" className="py-24 px-6 bg-brand-card/30 border-y border-brand-border">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span class="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">/ ULASAN KLIEN</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">/ ULASAN KLIEN</span>
             <h2 className="font-heading text-3xl sm:text-5xl font-bold text-white">Apa Kata Mereka?</h2>
           </div>
 
