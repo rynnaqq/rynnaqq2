@@ -17,16 +17,16 @@ class Ember {
     reset() {
         this.x = Math.random() * canvas.width;
         this.y = canvas.height + 10;
-        this.size = Math.random() * 2.5 + 1;
-        this.speedY = Math.random() * 1.2 + 0.4;
-        this.speedX = Math.random() * 0.8 - 0.4;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 1.5 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
         this.opacity = Math.random() * 0.7 + 0.3;
         this.color = Math.random() > 0.5 ? '#ff3b3f' : '#f4c430';
     }
     update() {
         this.y -= this.speedY;
         this.x += this.speedX;
-        this.opacity -= 0.0025;
+        this.opacity -= 0.003;
         if (this.y < 0 || this.opacity <= 0) this.reset();
     }
     draw() {
@@ -38,7 +38,7 @@ class Ember {
     }
 }
 
-for (let i = 0; i < 40; i++) particles.push(new Ember());
+for (let i = 0; i < 45; i++) particles.push(new Ember());
 
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -70,23 +70,18 @@ function toggleSpotifyBar() {
     spotifyBar.classList.toggle('active');
 }
 
-/* --- 3. SCROLL HELPER & REVEAL --- */
-function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-}
-
+/* --- 3. SCROLL REVEAL TRANSITIONS --- */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
         }
     });
-}, { threshold: 0.15 });
+}, { threshold: 0.2 });
 
 document.querySelectorAll('section').forEach(sec => observer.observe(sec));
 
-/* --- 4. BOO TAO INTERACTION --- */
+/* --- 4. BOO TAO GHOST INTERACTION --- */
 const quotes = [
     "Silly-churl, billy-churl, silly-billy hilichurl~ 🎶",
     "Saat matahari terbit, berjemurlah! Saat bulan terbit, berjemurlah cahaya bulan~",
@@ -102,6 +97,7 @@ function ghostInteract() {
     bubble.innerText = randomQuote;
     bubble.classList.add('show');
 
+    // Sound effect buatan sederhana (Web Audio API)
     playPopSound();
 
     setTimeout(() => {
@@ -124,7 +120,7 @@ function playPopSound() {
     osc.stop(ctx.currentTime + 0.1);
 }
 
-/* --- 5. COUPON GENERATOR --- */
+/* --- 5. COUPON INTERACTION --- */
 function claimCoupon() {
     const res = document.getElementById('couponResult');
     const randomCode = "HU-TAO-" + Math.floor(1000 + Math.random() * 9000);

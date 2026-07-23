@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hu Tao — Director of Wangsheng Funeral Parlor</title>
-    <!-- Font Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Cinzel:wght@600;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,35 +27,83 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <h1 class="hero-title">HU TAO</h1>
-        <p class="hero-subtitle">77th Director of Wangsheng Funeral Parlor</p>
-        
-        <div class="gif-container">
-            <img src="Hu Tao GIF - Hu Tao - Discover & Share GIFs.gif" alt="Hu Tao Interactive GIF">
+    <!-- Top Navbar Modern -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-box">🔥</div>
+            <span>WANGSHENG</span>
         </div>
+        <div class="nav-actions">
+            <button class="icon-btn" onclick="toggleSpotifyBar()" title="Toggle Music Player">🌙</button>
+            <button class="icon-btn" title="Menu">☰</button>
+        </div>
+    </nav>
 
-        <button class="btn-action" onclick="toggleSpotifyBar()" style="margin-top: 30px;">
-            🎵 Toggle Spotify Player
-        </button>
+    <!-- Hero Section Modern Redesign -->
+    <header class="hero">
+        <div class="hero-container">
+            <!-- Status Badge -->
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Tersedia untuk Upacara Baka & Konsultasi Roh</span>
+            </div>
+
+            <!-- Big Modern Headline -->
+            <h1 class="hero-headline">
+                Menjaga Keseimbangan <br>
+                <span class="gradient-text">Dunia Fana & Baka.</span>
+            </h1>
+
+            <!-- Subtitle Description -->
+            <p class="hero-description">
+                Saya adalah <strong>Hu Tao</strong>, Direktur ke-77 Wangsheng Funeral Parlor. Berfokus pada pelayanan upacara pemakaman eksklusif, puisi malam Liyue, dan menjaga kedamaian para roh.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="hero-cta-group">
+                <button class="btn-primary" onclick="scrollToSection('profil')">
+                    Lihat Profil <span class="arrow-down">↓</span>
+                </button>
+                <button class="btn-secondary" onclick="claimCoupon()">
+                    📄 Klaim Kupon (PDF)
+                </button>
+            </div>
+
+            <!-- Tech / Attribute Stack -->
+            <div class="stack-section">
+                <span class="stack-title">Atribut Utama:</span>
+                <div class="tag-group">
+                    <span class="tag">Pyro Vision 🔥</span>
+                    <span class="tag">Staff of Homa 🔱</span>
+                    <span class="tag">Beli 1 Gratis 1 🎟️</span>
+                    <span class="tag">Penyair Liyue 📜</span>
+                </div>
+            </div>
+
+            <!-- Hero Image / GIF Container Card -->
+            <div class="hero-image-card">
+                <img src="Hu Tao GIF - Hu Tao - Discover & Share GIFs.gif" alt="Hu Tao Interactive GIF">
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
     <main>
-        <!-- Section 1: About -->
-        <section class="card">
+        <!-- Section 1: Profil -->
+        <section id="profil" class="card">
             <h2 class="section-heading">Profil Karakter</h2>
-            <p style="line-height: 1.8; color: #ddd;">
+            <p style="line-height: 1.8; color: #aaa;">
                 Hu Tao adalah Direktur ke-77 dari Wangsheng Funeral Parlor di Liyue. Meskipun tugas utamanya berhubungan dengan upacara pemakaman dan keseimbangan antara alam hidup dan mati, kepribadiannya sangat ceria, eksentrik, dan suka jahil!
             </p>
         </section>
 
-        <!-- Section 2: Interactive Wangsheng Coupon -->
+        <!-- Section 2: Promosi Interactive -->
         <section class="card">
             <h2 class="section-heading">Spesial Promosi Wangsheng</h2>
-            <p>Beli 1 Gratis 1 Layanan Pemakaman Eksekutif! Klik tombol di bawah untuk klaim diskon istimewa dari Hu Tao.</p>
-            <button class="btn-action" onclick="claimCoupon()">🎟️ Klaim Kupon Wangsheng</button>
+            <p style="color: #aaa; margin-bottom: 15px;">
+                Beli 1 Gratis 1 Layanan Pemakaman Eksekutif! Klik tombol di bawah untuk klaim diskon istimewa dari Hu Tao.
+            </p>
+            <button class="btn-primary" onclick="claimCoupon()">🎟️ Klaim Kupon Wangsheng</button>
             <div id="couponResult" style="margin-top: 15px; font-weight: bold; color: var(--gold-accent);"></div>
         </section>
     </main>
@@ -69,7 +117,7 @@
         <ellipse cx="50" cy="58" rx="7" ry="4" fill="#ff3b3f"/>
     </svg>
 
-    <!-- Audio Element (Genshin Theme Ambient Synth) -->
+    <!-- Audio Element -->
     <audio id="bgmAudio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=asian-traditional-japanese-china-background-music-113228.mp3"></audio>
 
     <script src="script.js"></script>
