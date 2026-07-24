@@ -29,7 +29,7 @@ body {
 
 .hidden { display: none !important; }
 
-/* 🌟 BACKGROUND IMAGE SLIDER (LOW OPACITY ROTATING SCENERY) */
+/* Background Image Slider */
 .bg-slider {
     position: fixed;
     top: 0;
@@ -56,11 +56,10 @@ body {
 }
 
 .bg-slide.active {
-    opacity: 0.18; /* Opacity rendah agar kontras teks tetap sempurna */
+    opacity: 0.18;
     transform: scale(1);
 }
 
-/* Background Canvas Particle */
 #particle-canvas {
     position: fixed;
     top: 0;
@@ -71,13 +70,12 @@ body {
     pointer-events: none;
 }
 
-/* --- STAGGERED ENTRANCE ANIMATIONS --- */
+/* Staggered Entrance Animations */
 .animate-entry {
     opacity: 0;
     transform: translateY(24px);
     animation: smoothFadeUp 0.9s var(--ease-smooth) forwards;
     animation-delay: var(--delay, 0s);
-    will-change: transform, opacity;
 }
 
 @keyframes smoothFadeUp {
@@ -87,7 +85,7 @@ body {
     }
 }
 
-/* --- TOP NAVBAR --- */
+/* Top Navbar */
 .navbar {
     width: 100%;
     max-width: 850px;
@@ -140,8 +138,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.35s var(--ease-smooth);
-    will-change: transform, background-color;
+    transition: transform 0.3s var(--ease-smooth), background-color 0.3s var(--ease-smooth);
 }
 
 .icon-btn:hover {
@@ -150,18 +147,18 @@ body {
     transform: translateY(-2px);
 }
 
-/* --- SPOTIFY 100% PLAYER WIDGET --- */
+/* ⚡ SPOTIFY PLAYER - ULTRA SMOOTH 60 FPS OPTIMIZATION ⚡ */
 .spotify-widget {
     position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateZ(0); /* Hardware Acceleration Enabled */
     width: 92%;
     max-width: 880px;
     height: 85px;
     background: rgba(18, 18, 18, 0.92);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px;
     padding: 12px 24px;
@@ -169,9 +166,16 @@ body {
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(29, 185, 84, 0.1);
-    transition: all 0.5s var(--ease-smooth);
-    will-change: transform, width, height, bottom, left;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(29, 185, 84, 0.1);
+    
+    /* Dihapus 'transition: all' & Diganti Spesifik agar Tidak Lag */
+    transition: 
+        max-width 0.45s var(--ease-smooth),
+        height 0.45s var(--ease-smooth),
+        border-radius 0.45s var(--ease-smooth),
+        padding 0.45s var(--ease-smooth),
+        box-shadow 0.45s var(--ease-smooth);
+    will-change: max-width, height;
 }
 
 /* Minimize Toggle Button */
@@ -190,7 +194,7 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s var(--ease-smooth);
+    transition: transform 0.3s var(--ease-smooth), background-color 0.3s var(--ease-smooth);
     z-index: 10;
 }
 
@@ -202,12 +206,13 @@ body {
 
 .minimize-btn .icon-max { display: none; }
 
-/* Left Section: Track Info */
+/* Left Section */
 .player-left {
     display: flex;
     align-items: center;
     gap: 14px;
     min-width: 200px;
+    transition: opacity 0.25s ease;
 }
 
 .album-art {
@@ -218,7 +223,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     animation: spin 10s linear infinite;
     animation-play-state: paused;
-    transition: border-radius 0.3s;
+    transition: width 0.4s var(--ease-smooth), height 0.4s var(--ease-smooth);
 }
 
 .spotify-widget.playing .album-art {
@@ -236,11 +241,14 @@ body {
     font-size: 0.92rem;
     font-weight: 700;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 .track-artist {
     font-size: 0.75rem;
     color: var(--text-muted);
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
 }
 
 .heart-btn {
@@ -258,7 +266,7 @@ body {
 .heart-btn:hover { transform: scale(1.15); }
 .heart-btn.liked svg { fill: var(--pyro-red); stroke: var(--pyro-red); }
 
-/* Center Section: Controls & Progress Bar */
+/* Center Section */
 .player-center {
     display: flex;
     flex-direction: column;
@@ -300,7 +308,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s var(--ease-smooth);
+    transition: transform 0.25s var(--ease-smooth), background-color 0.25s var(--ease-smooth);
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
@@ -314,6 +322,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: opacity 0.2s ease;
 }
 
 .time-text {
@@ -342,16 +351,16 @@ body {
     background: var(--spotify-green);
     border-radius: 10px;
     position: relative;
-    transition: width 0.1s linear;
 }
 
-/* Right Section: Volume Slider */
+/* Right Section */
 .player-right {
     display: flex;
     align-items: center;
     gap: 10px;
     min-width: 130px;
     justify-content: flex-end;
+    transition: opacity 0.2s ease;
 }
 
 .vol-icon {
@@ -379,21 +388,20 @@ body {
     cursor: pointer;
 }
 
-/* 🌟 MINIMIZED SPOTIFY MODE (FLOATING MINI PILL) */
+/* ⚡ MINIMIZED MODE (SMOOTH & CENTERED) ⚡ */
 .spotify-widget.minimized {
-    left: 30px;
-    transform: translateX(0);
-    width: 280px;
-    height: 62px;
-    padding: 8px 16px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(0); /* Posisi tetap di tengah agar GPU render mulus */
+    max-width: 320px;
+    height: 60px;
+    padding: 8px 18px;
     border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(29, 185, 84, 0.2);
-    background: rgba(18, 18, 18, 0.95);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 12px rgba(29, 185, 84, 0.2);
 }
 
 .spotify-widget.minimized .minimize-btn {
     top: 50%;
-    right: 12px;
+    right: 14px;
     transform: translateY(-50%);
 }
 
@@ -406,8 +414,8 @@ body {
 }
 
 .spotify-widget.minimized .album-art {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -421,7 +429,7 @@ body {
 
 .spotify-widget.minimized .player-center {
     width: auto;
-    margin-right: 35px;
+    margin-right: 32px;
 }
 
 .spotify-widget.minimized .main-play-btn {
@@ -429,7 +437,7 @@ body {
     height: 32px;
 }
 
-/* --- HERO SECTION --- */
+/* Hero Section */
 .hero {
     min-height: calc(100vh - 80px);
     display: flex;
@@ -536,7 +544,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.35s var(--ease-smooth);
+    transition: transform 0.35s var(--ease-smooth), background-color 0.35s var(--ease-smooth);
 }
 
 .tag:hover {
@@ -565,7 +573,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: all 0.35s var(--ease-smooth);
+    transition: transform 0.35s var(--ease-smooth), background-color 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
@@ -584,7 +592,7 @@ body {
     transform: translateY(4px);
 }
 
-/* --- MAIN SECTIONS --- */
+/* Main Content */
 main {
     max-width: 850px;
     margin: 0 auto;
@@ -619,7 +627,7 @@ section.visible {
     margin-bottom: 16px;
 }
 
-/* --- BOO TAO INTERACTIVE GHOST --- */
+/* Floating Ghost (Boo Tao) */
 .ghost-interactive {
     position: fixed;
     bottom: 110px;
@@ -669,5 +677,5 @@ section.visible {
     .spotify-widget { width: 95%; height: 80px; padding: 10px 14px; }
     .player-left { min-width: 140px; }
     .player-right { display: none; }
-    .spotify-widget.minimized { left: 15px; }
+    .spotify-widget.minimized { max-width: 280px; }
 }

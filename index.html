@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <!-- Genshin Impact Rotating Background Images (Low Opacity Slider) -->
+    <!-- Genshin Impact Rotating Background Images -->
     <div class="bg-slider">
         <div class="bg-slide active" style="background-image: url('https://images.alphacoders.com/112/1120054.jpg');"></div>
         <div class="bg-slide" style="background-image: url('https://images.alphacoders.com/114/1141380.jpg');"></div>
@@ -21,7 +21,7 @@
     <!-- Canvas Background Embers -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- 🎵 SPOTIFY PLAYER WIDGET WITH SVG ICONS -->
+    <!-- 🎵 SPOTIFY PLAYER WIDGET -->
     <div class="spotify-widget" id="spotifyWidget">
         <!-- Toggle Minimize / Maximize Button -->
         <button class="minimize-btn" onclick="toggleMinimize()" id="minimizeBtn" title="Minimize / Expand Player">
@@ -105,7 +105,6 @@
     <!-- Hero Section Clean & Ultra Smooth -->
     <header class="hero">
         <div class="hero-container">
-            <!-- Headline & Intro -->
             <h1 class="hero-headline animate-entry" style="--delay: 0.1s;">
                 Hi! I'm <span class="gradient-text">Hu Tao</span>
             </h1>
@@ -114,14 +113,13 @@
                 Direktur ke-77 Wangsheng Funeral Parlor — Menjaga keseimbangan dunia fana & baka melalui tradisi, puisi, dan elemen Pyro.
             </p>
 
-            <!-- Visual Card Utama -->
             <div class="hero-image-wrapper animate-entry" style="--delay: 0.3s;">
                 <div class="hero-image-card">
-                    <img src="Hu Tao GIF - Hu Tao - Discover & Share GIFs.gif" alt="Hu Tao Interactive GIF">
+                    <!-- Pastikan file GIF di Vercel dinamai 'hu-tao.gif' agar terload sempurna -->
+                    <img src="hu-tao.gif" alt="Hu Tao Interactive GIF" onerror="this.onerror=null; this.src='https://media.tenor.com/13sP_QvS62AAAAAC/hu-tao-genshin-impact.gif';">
                 </div>
             </div>
 
-            <!-- Atribut Tags with Vector Icons -->
             <div class="stack-section animate-entry" style="--delay: 0.4s;">
                 <div class="tag-group">
                     <span class="tag">
@@ -143,7 +141,6 @@
                 </div>
             </div>
 
-            <!-- Tombol Utama -->
             <div class="hero-cta-bottom animate-entry" style="--delay: 0.5s;">
                 <button class="btn-primary" onclick="scrollToSection('profil')">
                     Lihat Profil
@@ -155,7 +152,6 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Section 1: Profil -->
         <section id="profil" class="card">
             <h2 class="section-heading">Profil Karakter</h2>
             <p style="line-height: 1.8; color: #aaa;">
@@ -173,7 +169,6 @@
         <ellipse cx="50" cy="58" rx="7" ry="4" fill="#ff3b3f"/>
     </svg>
 
-    <!-- Audio Element -->
     <audio id="bgmAudio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=asian-traditional-japanese-china-background-music-113228.mp3"></audio>
 
     <script src="script.js"></script>
