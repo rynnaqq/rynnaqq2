@@ -1,3 +1,17 @@
+/* --- 0. BACKGROUND ROTATING SLIDER --- */
+const bgSlides = document.querySelectorAll('.bg-slide');
+let currentSlide = 0;
+
+function rotateBackground() {
+    if (bgSlides.length === 0) return;
+    bgSlides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % bgSlides.length;
+    bgSlides[currentSlide].classList.add('active');
+}
+
+// Berganti gambar latar setiap 7 detik secara otomatis
+setInterval(rotateBackground, 7000);
+
 /* --- 1. PARTICLE CANVAS EFFICIENT ANIMATION --- */
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
@@ -47,27 +61,82 @@ function animateParticles() {
 }
 animateParticles();
 
-/* --- 2. SPOTIFY PLAYER CONTROLLER --- */
+/* --- 2. SPOTIFY PLAYER REALTIME AUDIO LOGIC --- */
 const audio = document.getElementById('bgmAudio');
-const playBtn = document.getElementById('playBtn');
-const spotifyBar = document.getElementById('spotifyPlayer');
+const playIcon = document.getElementById('playIcon');
+const pauseIcon = document.getElementById('pauseIcon');
+const spotifyWidget = document.getElementById('spotifyWidget');
+const progressBar = document.getElementById('progressBar');
+const currentTimeEl = document.getElementById('currentTime');
+const durationTimeEl = document.getElementById('durationTime');
 let isPlaying = false;
 
 function toggleAudio() {
     if (isPlaying) {
         audio.pause();
-        playBtn.innerText = '▶';
-        spotifyBar.classList.remove('playing');
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        spotifyWidget.classList.remove('playing');
     } else {
-        audio.play();
-        playBtn.innerText = '⏸';
-        spotifyBar.classList.add('playing');
+        audio.play().then(() => {
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+            spotifyWidget.classList.add('playing');
+        }).catch(e => console.log('Autoplay blocked:', e));
     }
     isPlaying = !isPlaying;
 }
 
-function toggleSpotifyBar() {
-    spotifyBar.classList.toggle('active');
+function toggleMinimize() {
+    spotifyWidget.classList.toggle('minimized');
+}
+
+function toggleLike(btn) {
+    btn.classList.toggle('liked');
+}
+
+// Audio Time Updates & Progress Sync
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        currentTimeEl.innerText = formatTime(audio.currentTime);
+    }
+});
+
+audio.addEventListener('loadedmetadata', () => {
+    durationTimeEl.innerText = formatTime(audio.duration);
+});
+
+// Interactive Progress Bar Click (Seek)
+function seekAudio(e) {
+    const container = document.getElementById('progressContainer');
+    const width = container.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    
+    if (duration) {
+        audio.currentTime = (clickX / width) * duration;
+    }
+}
+
+// Volume Controls with Dynamic SVG Icon Update
+function changeVolume(val) {
+    audio.volume = val;
+    const volSvg = document.getElementById('volSvg');
+    if (val == 0) {
+        volSvg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>`;
+    } else if (val < 0.5) {
+        volSvg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>`;
+    } else {
+        volSvg.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>`;
+    }
+}
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
 /* --- 3. SCROLL HELPER & REVEAL --- */
@@ -88,7 +157,7 @@ document.querySelectorAll('section').forEach(sec => observer.observe(sec));
 
 /* --- 4. BOO TAO INTERACTION --- */
 const quotes = [
-    "Silly-churl, billy-churl, silly-billy hilichurl~ 🎶",
+    "Silly-churl, billy-churl, silly-billy hilichurl~",
     "Saat matahari terbit, berjemurlah! Saat bulan terbit, berjemurlah cahaya bulan~",
     "Satu pesanan, gratis satu peti mati! Promo terbatas!",
     "Ehe~ Mau jalan-jalan ke alam lain denganku?",
@@ -122,11 +191,4 @@ function playPopSound() {
     gain.connect(ctx.destination);
     osc.start();
     osc.stop(ctx.currentTime + 0.1);
-}
-
-/* --- 5. COUPON GENERATOR --- */
-function claimCoupon() {
-    const res = document.getElementById('couponResult');
-    const randomCode = "HU-TAO-" + Math.floor(1000 + Math.random() * 9000);
-    res.innerHTML = `🎉 Kupon Diklaim! Kode: <u>${randomCode}</u><br><small>*Tunjukkan kupon ini ke Wangsheng Funeral Parlor untuk diskon Beli 1 Gratis 1!</small>`;
 }

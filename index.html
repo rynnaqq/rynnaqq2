@@ -10,79 +10,145 @@
 </head>
 <body>
 
+    <!-- Genshin Impact Rotating Background Images (Low Opacity Slider) -->
+    <div class="bg-slider">
+        <div class="bg-slide active" style="background-image: url('https://images.alphacoders.com/112/1120054.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('https://images.alphacoders.com/114/1141380.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('https://images.alphacoders.com/128/1283838.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('https://images8.alphacoders.com/115/1152014.jpg');"></div>
+    </div>
+
     <!-- Canvas Background Embers -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Spotify-Style Top Player Widget -->
-    <div class="spotify-bar active" id="spotifyPlayer">
-        <div class="spotify-info">
-            <img src="https://i.pinimg.com/564x/24/77/80/24778007421882c3c9e6931535496417.jpg" class="album-art" alt="Hu Tao Theme">
-            <div class="track-details">
-                <h4>Let the Living Beware ♫</h4>
-                <p>Hu Tao Theme — Genshin Impact</p>
+    <!-- 🎵 SPOTIFY PLAYER WIDGET WITH SVG ICONS -->
+    <div class="spotify-widget" id="spotifyWidget">
+        <!-- Toggle Minimize / Maximize Button -->
+        <button class="minimize-btn" onclick="toggleMinimize()" id="minimizeBtn" title="Minimize / Expand Player">
+            <svg class="icon-min" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg class="icon-max" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </button>
+
+        <!-- Left: Album Art & Track Meta -->
+        <div class="player-left">
+            <img src="https://i.pinimg.com/564x/24/77/80/24778007421882c3c9e6931535496417.jpg" class="album-art" id="albumArt" alt="Hu Tao Theme">
+            <div class="track-meta">
+                <span class="track-title">Let the Living Beware</span>
+                <span class="track-artist">Hu Tao Theme — Genshin Impact</span>
+            </div>
+            <button class="heart-btn" onclick="toggleLike(this)" title="Suka Lagu Ini">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+        </div>
+
+        <!-- Center: Controls & Interactive Progress Bar -->
+        <div class="player-center">
+            <div class="control-buttons">
+                <!-- Shuffle -->
+                <button class="sub-btn" title="Acak Lagu">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <!-- Prev -->
+                <button class="sub-btn" title="Sebelumnya">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2" height="16"/></svg>
+                </button>
+                <!-- Main Play / Pause -->
+                <button class="main-play-btn" id="playBtn" onclick="toggleAudio()" title="Putar / Jeda">
+                    <svg id="playIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    <svg id="pauseIcon" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </button>
+                <!-- Next -->
+                <button class="sub-btn" title="Berikutnya">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><rect x="17" y="4" width="2" height="16"/></svg>
+                </button>
+                <!-- Repeat -->
+                <button class="sub-btn" title="Ulangi">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                </button>
+            </div>
+            <div class="playback-bar">
+                <span class="time-text" id="currentTime">0:00</span>
+                <div class="progress-container" id="progressContainer" onclick="seekAudio(event)">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <span class="time-text" id="durationTime">0:00</span>
             </div>
         </div>
-        <div class="spotify-controls">
-            <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶</button>
+
+        <!-- Right: Volume Controls -->
+        <div class="player-right">
+            <span class="vol-icon">
+                <svg id="volSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" oninput="changeVolume(this.value)">
         </div>
     </div>
 
     <!-- Top Navbar Modern -->
-    <nav class="navbar">
+    <nav class="navbar animate-fade">
         <div class="nav-brand">
-            <div class="logo-box">🔥</div>
+            <div class="logo-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--pyro-red)"><path d="M12 23c-4.97 0-9-3.58-9-8 0-4.42 4.03-8.5 7-12 1 2 2 4.5 2 6 2-2 4-4 4-6 3 3.5 7.03 7.58 7 12 0 4.42-4.03 8-9 8z"/></svg>
+            </div>
             <span>WANGSHENG</span>
         </div>
         <div class="nav-actions">
-            <button class="icon-btn" onclick="toggleSpotifyBar()" title="Toggle Music Player">🌙</button>
-            <button class="icon-btn" title="Menu">☰</button>
+            <button class="icon-btn" onclick="toggleMinimize()" title="Buka Music Player">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </button>
+            <button class="icon-btn" title="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section Modern Redesign -->
+    <!-- Hero Section Clean & Ultra Smooth -->
     <header class="hero">
         <div class="hero-container">
-            <!-- Status Badge -->
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                <span>Tersedia untuk Upacara Baka & Konsultasi Roh</span>
-            </div>
-
-            <!-- Big Modern Headline -->
-            <h1 class="hero-headline">
-                Menjaga Keseimbangan <br>
-                <span class="gradient-text">Dunia Fana & Baka.</span>
+            <!-- Headline & Intro -->
+            <h1 class="hero-headline animate-entry" style="--delay: 0.1s;">
+                Hi! I'm <span class="gradient-text">Hu Tao</span>
             </h1>
 
-            <!-- Subtitle Description -->
-            <p class="hero-description">
-                Saya adalah <strong>Hu Tao</strong>, Direktur ke-77 Wangsheng Funeral Parlor. Berfokus pada pelayanan upacara pemakaman eksklusif, puisi malam Liyue, dan menjaga kedamaian para roh.
+            <p class="hero-description animate-entry" style="--delay: 0.2s;">
+                Direktur ke-77 Wangsheng Funeral Parlor — Menjaga keseimbangan dunia fana & baka melalui tradisi, puisi, dan elemen Pyro.
             </p>
 
-            <!-- Call to Action Buttons -->
-            <div class="hero-cta-group">
-                <button class="btn-primary" onclick="scrollToSection('profil')">
-                    Lihat Profil <span class="arrow-down">↓</span>
-                </button>
-                <button class="btn-secondary" onclick="claimCoupon()">
-                    📄 Klaim Kupon (PDF)
-                </button>
-            </div>
-
-            <!-- Tech / Attribute Stack -->
-            <div class="stack-section">
-                <span class="stack-title">Atribut Utama:</span>
-                <div class="tag-group">
-                    <span class="tag">Pyro Vision 🔥</span>
-                    <span class="tag">Staff of Homa 🔱</span>
-                    <span class="tag">Beli 1 Gratis 1 🎟️</span>
-                    <span class="tag">Penyair Liyue 📜</span>
+            <!-- Visual Card Utama -->
+            <div class="hero-image-wrapper animate-entry" style="--delay: 0.3s;">
+                <div class="hero-image-card">
+                    <img src="Hu Tao GIF - Hu Tao - Discover & Share GIFs.gif" alt="Hu Tao Interactive GIF">
                 </div>
             </div>
 
-            <!-- Hero Image / GIF Container Card -->
-            <div class="hero-image-card">
-                <img src="Hu Tao GIF - Hu Tao - Discover & Share GIFs.gif" alt="Hu Tao Interactive GIF">
+            <!-- Atribut Tags with Vector Icons -->
+            <div class="stack-section animate-entry" style="--delay: 0.4s;">
+                <div class="tag-group">
+                    <span class="tag">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--pyro-orange)"><path d="M12 23c-4.97 0-9-3.58-9-8 0-4.42 4.03-8.5 7-12 1 2 2 4.5 2 6 2-2 4-4 4-6 3 3.5 7.03 7.58 7 12 0 4.42-4.03 8-9 8z"/></svg>
+                        Pyro Vision
+                    </span>
+                    <span class="tag">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M12 2l-4 4M12 2l4 4M5 8l7-6 7 6"/></svg>
+                        Staff of Homa
+                    </span>
+                    <span class="tag">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="10" y2="12"/></svg>
+                        Beli 1 Gratis 1
+                    </span>
+                    <span class="tag">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        Penyair Liyue
+                    </span>
+                </div>
+            </div>
+
+            <!-- Tombol Utama -->
+            <div class="hero-cta-bottom animate-entry" style="--delay: 0.5s;">
+                <button class="btn-primary" onclick="scrollToSection('profil')">
+                    Lihat Profil
+                    <svg class="arrow-down" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+                </button>
             </div>
         </div>
     </header>
@@ -96,20 +162,10 @@
                 Hu Tao adalah Direktur ke-77 dari Wangsheng Funeral Parlor di Liyue. Meskipun tugas utamanya berhubungan dengan upacara pemakaman dan keseimbangan antara alam hidup dan mati, kepribadiannya sangat ceria, eksentrik, dan suka jahil!
             </p>
         </section>
-
-        <!-- Section 2: Promosi Interactive -->
-        <section class="card">
-            <h2 class="section-heading">Spesial Promosi Wangsheng</h2>
-            <p style="color: #aaa; margin-bottom: 15px;">
-                Beli 1 Gratis 1 Layanan Pemakaman Eksekutif! Klik tombol di bawah untuk klaim diskon istimewa dari Hu Tao.
-            </p>
-            <button class="btn-primary" onclick="claimCoupon()">🎟️ Klaim Kupon Wangsheng</button>
-            <div id="couponResult" style="margin-top: 15px; font-weight: bold; color: var(--gold-accent);"></div>
-        </section>
     </main>
 
     <!-- Floating Ghost (Boo Tao) -->
-    <div class="speech-bubble" id="speechBubble">Silly-churl, billy-churl... 👻</div>
+    <div class="speech-bubble" id="speechBubble">Silly-churl, billy-churl...</div>
     <svg class="ghost-interactive" id="booTao" onclick="ghostInteract()" viewBox="0 0 100 100">
         <path d="M50,10 C30,10 15,30 15,55 C15,75 10,85 25,85 C35,85 40,75 50,85 C60,75 65,85 75,85 C90,85 85,75 85,55 C85,30 70,10 50,10 Z" fill="#ffffff" opacity="0.9"/>
         <circle cx="38" cy="45" r="5" fill="#111"/>
